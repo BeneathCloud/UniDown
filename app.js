@@ -22,14 +22,10 @@ const sources = [
     {name: 'pornhub', fn: pornhub.download, saveDir: 'pornhub'},
     {name: 'e-hentai', fn: ehentai.download, saveDir: 'ehentai'}
 ].map((x) => {
-    // if (x.saveDir === '') {
-    //     x.saveDir = baseSaveDir
-    // } else {
-        x.saveDir = baseSaveDir + '/' + x.saveDir
-        if (!fs.existsSync(x.saveDir)){
-            fs.mkdirSync(x.saveDir);
-        }
-    // }
+    x.saveDir = baseSaveDir + '/' + x.saveDir
+    if (!fs.existsSync(x.saveDir)){
+        fs.mkdirSync(x.saveDir);
+    }
     return x
 })
 
@@ -82,11 +78,11 @@ app.post("/resource", (req, res) => {
             const downloadFn = source.fn
             downloadFn(url, source.saveDir)
         } else {
-            console.error("Source not supported yet: " + hostname)
+            console.error("[Source Not Supported Yet: ]" + hostname)
         }
     } catch (err) {
         console.error(err)
     }
     
-    res.send("download started")
+    res.send("[Download Started: ]" + url)
 })

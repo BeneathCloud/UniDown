@@ -24,7 +24,7 @@ var pornhubDownloader = {
             status.removeDownloading(title)
             status.setDownloaded(title, directUrl)
         } catch (err) {
-            console.error("Download failed: " + url + "\n" + err)
+            console.error("[Download Failed: ]" + url + "\n" + err)
             status.setFailed(url, err)
         }
     }
