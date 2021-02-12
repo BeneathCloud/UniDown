@@ -9,7 +9,7 @@ var pornhubDownloader = {
         try {
             const video = await pornhub.page(url, ['title', 'download_urls'])
             if (video.error) throw "fetch url failed"
-            const title = video.title
+            const title = video.title.replaceAll('/', '\\')
             const directUrls = video.download_urls
             const highestResolution = Math.max(...Object.keys(directUrls).map((x) => {return parseInt(x.slice(0, -1))})) + 'P'
             const directUrl = directUrls[highestResolution]

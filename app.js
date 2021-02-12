@@ -10,6 +10,7 @@ const status = require('./status.js')
 const pornhub = require('./pornhub.js')
 const ehentai = require('./ehentai.js')
 const instagram = require('./instagram.js')
+const xvideos = require('./xvideos.js')
 
 const config = require('./config.js')
 const baseSaveDir = config.get('baseSaveDir').value()
@@ -17,7 +18,8 @@ const baseSaveDir = config.get('baseSaveDir').value()
 const sources = [
     {name: 'pornhub', fn: pornhub.download, saveDir: 'pornhub'},
     {name: 'e-hentai', fn: ehentai.download, saveDir: 'ehentai'},
-    {name: 'instagram', fn: instagram.download, saveDir: 'instagram'}
+    {name: 'instagram', fn: instagram.download, saveDir: 'instagram'},
+    {name: 'xvideos', fn: xvideos.download, saveDir: 'xvideos'},
 ].map((x) => {
     x.saveDir = baseSaveDir + '/' + x.saveDir
     if (!fs.existsSync(x.saveDir)){
@@ -78,7 +80,6 @@ app.delete("/log", (req, res) => {
 app.post("/resource", (req, res) => {
     const url = req.body.url
     const hostname = urlParser.parse(url).hostname
-
     try {
         const source = sources.find(x => hostname.includes(x.name))
         if (source) {
