@@ -2,6 +2,7 @@ const pornhub = require('@justalk/pornhub-api')
 const m3u8Downloader = require('./m3u8-downloader.js')
 const fs = require('fs');
 const status = require('./status.js')
+const utils = require('./utils.js')
 
 var pornhubDownloader = {
     download: async function (url, saveDir) {
@@ -14,10 +15,7 @@ var pornhubDownloader = {
             const directUrl = directUrls[highestResolution]
             const path = saveDir + '/' + title + '.mp4'
 
-            const existingVideos = fs.readdirSync(saveDir)
-            if (existingVideos.find(fileName => fileName == (title + '.mp4'))) {
-                throw "file existing"
-            }
+            if (utils.isDuplicate(title + '.mp4', saveDir)) { throw "[File Existing: ]" + title + '.mp4' }
 
             status.setDownloading(title, directUrl)
             await m3u8Downloader.download(directUrl, path)
