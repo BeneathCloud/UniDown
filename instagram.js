@@ -19,11 +19,13 @@ async function downloadProfile(url, path) {
         if (error) {
             console.log(`error: ${error.message}`)
             status.setFailed(profile, error)
+            status.removeDownloading(profile)
             return
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`)
             status.setFailed(profile, stderr)
+            status.removeDownloading(profile)
             return
         }
         console.log(`stdout: ${stdout}`)
@@ -46,11 +48,13 @@ async function update(profile, path) {
         if (error) {
             console.log(`error: ${error.message}`)
             status.setFailed(profile, error)
+            status.removeDownloading(profile)
             return
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`)
             status.setFailed(profile, stderr)
+            status.removeDownloading(profile)
             return
         }
         console.log(`stdout: ${stdout}`)
@@ -70,11 +74,13 @@ async function updateAllFollowing(path) {
         if (error) {
             console.log(`error: ${error.message}`)
             status.setFailed("update all", error)
+            status.removeDownloading("updating all following...")
             return
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`)
             status.setFailed("update all", stderr)
+            status.removeDownloading("updating all following...")
             return
         }
         console.log(`stdout: ${stdout}`)
