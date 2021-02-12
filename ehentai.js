@@ -1,4 +1,4 @@
-const exApi = require('exApi').default
+const exApi = require('exapi').default
 const urlParser = require('url')
 const status = require('./status.js')
  
