@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const fs = require('fs')
 const urlParser = require('url')
 const pornhub = require('./pornhub.js')
-const db = require('./db.js')
+const status = require('./status.js')
 
 const raw = fs.readFileSync('config.json')
 const config = JSON.parse(raw)
@@ -37,9 +37,7 @@ app.listen(3000, () => {
 })
 
 app.get("/status", (req, res) => {
-    db.read()
-    const state = db.getState()
-    res.send(state)
+    res.send(status.getStatus())
 })
 
 app.get("/log", (req, res) => {
@@ -53,23 +51,19 @@ app.get("/log", (req, res) => {
 })
 
 app.delete("/status/failed", (req, res) => {
-    db.set('failed', []).write()
-    res.send(db.read().getState())
+    res.send(status.deleteFailed())
 })
 
 app.delete("/status/downloading", (req, res) => {
-    db.set('downloading', []).write()
-    res.send(db.read().getState())
+    res.send(status.deleteDownloading())
 })
 
 app.delete("/status/downloaded", (req, res) => {
-    db.set('downloaded', []).write()
-    res.send(db.read().getState())
+    res.send(status.deleteDownloaded())
 })
 
 app.delete("/status", (req, res) => {
-    db.setState({ downloading: [], downloaded: [], failed: [] }).write()
-    res.send(db.read().getState())
+    res.send(status.resetStatus())
 })
 
 app.post("/resource", (req, res) => {
