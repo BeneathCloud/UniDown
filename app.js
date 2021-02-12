@@ -6,8 +6,9 @@ const bodyParser = require('body-parser')
 // const path = require('path')
 const fs = require('fs')
 const urlParser = require('url')
-const pornhub = require('./pornhub.js')
 const status = require('./status.js')
+const pornhub = require('./pornhub.js')
+const ehentai = require('./ehentai.js')
 
 const raw = fs.readFileSync('config.json')
 const config = JSON.parse(raw)
@@ -18,12 +19,17 @@ const baseSaveDir = config.baseSaveDir
 // }
 
 const sources = [
-    {name: 'pornhub', fn: pornhub.download, saveDir: 'pornhub'}
+    {name: 'pornhub', fn: pornhub.download, saveDir: 'pornhub'},
+    {name: 'e-hentai', fn: ehentai.download, saveDir: 'ehentai'}
 ].map((x) => {
-    x.saveDir = baseSaveDir + '/' + x.saveDir
-    if (!fs.existsSync(x.saveDir)){
-        fs.mkdirSync(x.saveDir);
-    }
+    // if (x.saveDir === '') {
+    //     x.saveDir = baseSaveDir
+    // } else {
+        x.saveDir = baseSaveDir + '/' + x.saveDir
+        if (!fs.existsSync(x.saveDir)){
+            fs.mkdirSync(x.saveDir);
+        }
+    // }
     return x
 })
 
