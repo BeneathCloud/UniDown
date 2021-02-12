@@ -1,0 +1,14 @@
+[Unit]
+Description=uni-down
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node app.js &> log.txt
+WorkingDirectory=/home/pi/UniDown
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
