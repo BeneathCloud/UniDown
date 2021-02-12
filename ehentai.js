@@ -2,10 +2,15 @@ const exApi = require('exapi').default
 const urlParser = require('url')
 const status = require('./status.js')
 const utils = require('./utils.js')
+const fs = require('fs')
+
+const raw = fs.readFileSync('config.json')
+const config = JSON.parse(raw)
+const ehentaiConf = config.ehentai
  
 const cookies = {
-    'ipb_member_id': '1940613',
-    'ipb_pass_hash': '2dcd91d9959f8afe9f5c004ee0a58d4a'
+    'ipb_member_id': ehentaiConf.id,
+    'ipb_pass_hash': ehentaiConf.hash
     // 'igneous': *
 }
 
