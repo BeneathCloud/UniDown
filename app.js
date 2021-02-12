@@ -68,6 +68,16 @@ app.delete("/status", (req, res) => {
     res.send(status.resetStatus())
 })
 
+app.delete("/log", (req, res) => {
+    try {
+        fs.closeSync(fs.openSync("./log.txt", 'w'));
+        res.send("log file clear succeed")
+    } catch (err) {
+        console.error(err)
+        res.send('log file clear failed: ' + err)
+    }
+})
+
 app.post("/resource", (req, res) => {
     const url = req.body.url
     const hostname = urlParser.parse(url).hostname
@@ -77,12 +87,13 @@ app.post("/resource", (req, res) => {
         if (source) {
             const downloadFn = source.fn
             downloadFn(url, source.saveDir)
+            res.send("[Download Started: ]" + url)
         } else {
-            console.error("[Source Not Supported Yet: ]" + hostname)
+            console.error("[Source Not Supported Yet: ]" + hostname + '\n')
+            throw "[Source Not Supported Yet: ]" + hostname + '\n'
         }
     } catch (err) {
         console.error(err)
+        res.send('[Download Failed: ]' + err)
     }
-    
-    res.send("[Download Started: ]" + url)
 })
