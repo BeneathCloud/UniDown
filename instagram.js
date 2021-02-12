@@ -27,7 +27,10 @@ async function downloadProfile(url, path) {
             return
         }
         console.log(`stdout: ${stdout}`)
-        following.push(profile).write()
+        const followList = following.value()
+        if (!followList.find(x => x == profile)) {
+            following.push(profile).write()
+        }
         console.log('[Download Completed: ]' + profile)
 
         status.removeDownloading(profile)
