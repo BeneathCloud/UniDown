@@ -24,7 +24,6 @@ async function download(url, path) {
 
         status.setDownloading(idToken[0], url)
         await exapi.downloadGallery(idToken, path)
-        console.log(statusList)
         status.removeDownloading(idToken[0])
         status.setDownloaded(idToken[0], url)
 
