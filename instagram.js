@@ -21,6 +21,12 @@ if (login) {
 async function downloadProfile(url, path) {
     const profile = urlParser.parse(url).pathname.split('/').filter(x => x!=='')[0]
 
+    if (following.value().find(x => x === profile)) {
+        console.log(`${profile} is in following list, download canceled, please use update`)
+        status.setFailed(profile, `${profile} is in following list, download canceled, please use update`)
+        return
+    }
+
     const downProcess = cp.spawn(downloader, args.concat([profile]), {
         cwd: path
     })
