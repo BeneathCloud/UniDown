@@ -9,6 +9,7 @@
 
 const status = require('./status.js')
 const utils = require('./utils.js')
+const fs = require('fs')
 // Buildin with nodejs
 const cp = require('child_process');
 const readline = require('readline');
@@ -31,11 +32,11 @@ async function download(url, dir) {
     const name = `(${id}) ${title}.mp4`
     const path = `${dir}/${name}`
 
-    if (utils.isDuplicate(name, dir)) throw `file ${name} exists`
-
-    status.setDownloading(title, url)
-
     try {
+        if (utils.isDuplicate(name, dir)) throw `file ${name} exists`
+
+        status.setDownloading(title, url)
+
         // Get audio and video streams
         const audio = ytdl(ref, { quality: 'highestaudio' })
               .on('progress', (_, downloaded, total) => {
@@ -122,9 +123,16 @@ async function download(url, dir) {
         await audio.pipe(ffmpegProcess.stdio[4]);
         await video.pipe(ffmpegProcess.stdio[5]);
 
+        // video.pipe(fs.createWriteStream(path + '.mp4'))
+        // audio.pipe(fs.createWriteStream(path + '.mp3'))
+
     } catch (err) {
         console.log(`error downloading: ${err}`)
         status.removeDownloading(title)
         status.setFailed(url, err)
     }
+}
+
+module.exports = {
+    download: download
 }

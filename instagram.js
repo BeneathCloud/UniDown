@@ -42,7 +42,7 @@ async function downloadProfile(url, path) {
     })
     
     downProcess.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`)
+        console.log(`stdout: ${data}\nhashdhashdahsdhas-----------`)
     })
 
     downProcess.stderr.on('data', (data) => {
