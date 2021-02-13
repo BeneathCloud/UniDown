@@ -1,0 +1,33 @@
+const fs = require('fs')
+const ytdl = require('ytdl-core')
+
+const status = require('./status.js')
+const utils = require('./utils.js')
+
+async function download(url, dir) {
+
+    try {
+        
+        const info = await ytdl.getBasicInfo(url)
+        const id = info.videoDetails.videoId
+        const title = info.videoDetails.title.replaceAll('/', '\\')
+        const name = `(${id}) ${title}.mp4`
+        const path = `${dir}/${name}`
+
+        if (utils.isDuplicate(name, dir)) throw `file ${name} exists`
+
+        status.setDownloading(title, url)
+        await ytdl(url)
+            .pipe(fs.createWriteStream(path))
+        status.removeDownloading(title)
+        status.setDownloaded(title, url)
+
+    } catch (err) {
+        console.error(err)
+        status.setFailed(url, err)
+    }
+}
+
+module.exports = {
+    download: download
+}
