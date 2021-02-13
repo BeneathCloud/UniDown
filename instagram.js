@@ -12,10 +12,11 @@ const login = config.get('instagram.login').value()
 const following = config.get('instagram.following')
 const downloader = config.get('instagram.pathToInstaloader').value()
 
+let args = undefined
 if (login) {
-    const args = [`--login ${username}`, `--password ${password}`]
+    args = [`--login ${username}`, `--password ${password}`]
 } else {
-    const args = []
+    args = []
 }
 
 async function downloadProfile(url, path) {
