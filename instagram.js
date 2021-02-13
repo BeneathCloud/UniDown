@@ -8,13 +8,20 @@ const cp = require("child_process");
 const config = require('./config.js')
 const username = config.get('instagram.username').value()
 const password = config.get('instagram.password').value()
+const login = config.get('instagram.login').value()
 const following = config.get('instagram.following')
 const downloader = config.get('instagram.pathToInstaloader').value()
+
+if (login) {
+    const args = [`--login ${username}`, `--password ${password}`]
+} else {
+    const args = []
+}
 
 async function downloadProfile(url, path) {
     const profile = urlParser.parse(url).pathname.split('/').filter(x => x!=='')[0]
 
-    const downProcess = cp.spawn(downloader, [`--login ${username}`, `--password ${password}`, profile], {
+    const downProcess = cp.spawn(downloader, args.concat([profile]), {
         cwd: path
     })
 

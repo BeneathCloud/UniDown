@@ -12,6 +12,7 @@ db.defaults({
     instagram: {
         username: "",
         password: "",
+        login: false,
         following: []
     }
 })
