@@ -11,6 +11,7 @@ const pornhub = require('./pornhub.js')
 const ehentai = require('./ehentai.js')
 const instagram = require('./instagram.js')
 const xvideos = require('./xvideos.js')
+const youtube = require('./youtube.js')
 
 const config = require('./config.js')
 const baseSaveDir = config.get('baseSaveDir').value()
@@ -20,6 +21,7 @@ const sources = [
     {name: 'e-hentai', fn: ehentai.download, saveDir: 'ehentai'},
     {name: 'instagram', fn: instagram.download, saveDir: 'instagram'},
     {name: 'xvideos', fn: xvideos.download, saveDir: 'xvideos'},
+    {name: 'youtube', fn: youtube.download, saveDir: 'youtube'}
 ].map((x) => {
     x.saveDir = baseSaveDir + '/' + x.saveDir
     if (!fs.existsSync(x.saveDir)){

@@ -1,8 +1,8 @@
 const fs = require('fs')
 
 var utils = {
-    isDuplicate: function (fileName, path) {
-        return fs.readdirSync(path).find(n => n == fileName) || false
+    isDuplicate: function (fileName, dir) {
+        return fs.readdirSync(dir).find(n => n == fileName) || false
     }
 }
 

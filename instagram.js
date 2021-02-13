@@ -14,7 +14,7 @@ const downloader = config.get('instagram.pathToInstaloader').value()
 
 let args = undefined
 if (login) {
-    args = [`--login ${username}`, `--password ${password}`]
+    args = [`--login=${username}`, `--password=${password}`]
 } else {
     args = []
 }
@@ -54,7 +54,7 @@ async function downloadProfile(url, path) {
         console.log(`child process exited with code ${code}`)
         status.removeDownloading(profile)
         if (processStatus.error) {
-            status.setFailed(profile, error)
+            status.setFailed(profile, `child process exited with code ${code}`)
             console.log('[Download Failed: ]' + profile)
         } else {
             const followList = following.value()
