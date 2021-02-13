@@ -61,7 +61,7 @@ async function downloadProfile(url, path) {
 
     downProcess.on('error', (err) => {
         console.error(`spawn child process error: ${err}`)
-        status.setFailed(profile, error)
+        status.setFailed(profile, err)
     })
 
     // exec(`cd ${path}; ${downloader} --login ${username} --password ${password} ${profile}`, (error, stdout, stderr) => {
