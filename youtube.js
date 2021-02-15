@@ -26,11 +26,13 @@ async function download(url, dir) {
         merged: { frame: 0, speed: '0x', fps: 0 },
     };
 
-    const info = await ytdl.getBasicInfo(url)
+    const info = await ytdl.getInfo(url)
     const id = info.videoDetails.videoId
     const title = info.videoDetails.title.replaceAll('/', '\\')
     const name = `(${id}) ${title}.mp4`
     const path = `${dir}/${name}`
+    const highestVideoItag = ytdl.chooseFormat(info.formats, { quality: 'highestvideo', filter: format => format.container === 'mp4' }).itag
+    const highestAudioItag = ytdl.chooseFormat(info.formats, { quality: 'highestaudio', filter: format => format.container === 'mp4' }).itag
 
     try {
         if (utils.isDuplicate(name, dir)) throw `file ${name} exists`
@@ -38,11 +40,11 @@ async function download(url, dir) {
         status.setDownloading(title, url)
 
         // Get audio and video streams
-        const audio = ytdl(ref, { quality: 'highestaudio' })
+        const audio = ytdl(ref, { quality: highestAudioItag})
               .on('progress', (_, downloaded, total) => {
                   tracker.audio = { downloaded, total };
               });
-        const video = ytdl(ref, { quality: 'highestvideo' })
+        const video = ytdl(ref, { quality: highestVideoItag })
               .on('progress', (_, downloaded, total) => {
                   tracker.video = { downloaded, total };
               });
@@ -132,7 +134,6 @@ async function download(url, dir) {
         status.setFailed(url, err)
     }
 }
-
 module.exports = {
     download: download
 }
