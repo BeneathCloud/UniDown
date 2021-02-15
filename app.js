@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 // const https = require('https')
 // const path = require('path')
 const fs = require('fs')
+const axios = require('axios')
 const urlParser = require('url')
 const status = require('./status.js')
 const pornhub = require('./pornhub.js')
@@ -15,6 +16,8 @@ const youtube = require('./youtube.js')
 
 const config = require('./config.js')
 const baseSaveDir = config.get('baseSaveDir').value()
+const direct = `${baseSaveDir}/direct` // directory for direct download link
+if (!fs.existsSync(direct)) fs.mkdirSync(direct)
 
 const sources = [
     {name: 'pornhub', fn: pornhub.download, saveDir: 'pornhub'},
@@ -89,8 +92,22 @@ app.post("/resource", (req, res) => {
             downloadFn(url, source.saveDir)
             res.send("[Download Started: ]" + url)
         } else {
-            console.error("[Source Not Supported Yet: ]" + hostname + '\n')
-            throw "[Source Not Supported Yet: ]" + hostname + '\n'
+            // console.error("[Source Not Supported Yet: ]" + hostname + '\n')
+            // throw "[Source Not Supported Yet: ]" + hostname + '\n'
+            axios({
+                method: 'get',
+                url: url,
+                responseType: 'stream'
+            })
+                .then((response) => {
+                    const name = Date() + ' ' + urlParser.parse(url).pathname.split('/').pop()
+                    response.data.pipe(fs.createWriteStream(`${direct}/${name}`))
+                    res.send("[Download Started: ]" + url)
+                })
+                .catch((err) => {
+                    console.error(`error when downloading direct link ${url}: ${err}`)
+                    res.send('[Download Failed: ]' + err)
+                })
         }
     } catch (err) {
         console.error(err)
