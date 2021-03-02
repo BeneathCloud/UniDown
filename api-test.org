@@ -1,0 +1,121 @@
+#+PROPERTY: header-args :var url="http://192.168.11.6:3000"
+#+roam_tags:
+
+* API Test for UniDown
+
+** Get Status
+   
+  #+begin_src restclient
+    GET :url/status
+  #+end_src
+
+  #+RESULTS:
+  #+BEGIN_SRC js
+  {
+    "downloading": [],
+    "downloaded": [
+      {
+        "title": "1853699",
+        "url": "https://e-hentai.org/g/1853699/04a84fa08f/"
+      },
+      {
+        "title": "1853689",
+        "url": "https://e-hentai.org/g/1853689/7bf9541fcf/"
+      },
+      {
+        "title": "1853708",
+        "url": "https://e-hentai.org/g/1853708/27c8c0bdb1/"
+      },
+      {
+        "title": "1853669",
+        "url": "https://e-hentai.org/g/1853669/7007e540d0/"
+      }
+    ],
+    "failed": []
+  }
+  // GET http://192.168.11.6:3000/status
+  // HTTP/1.1 200 OK
+  // X-Powered-By: Express
+  // Content-Type: application/json; charset=utf-8
+  // Content-Length: 329
+  // ETag: W/"149-taJ1U+UhNx+uy2UJPMuuodkCrtM"
+  // Date: Tue, 23 Feb 2021 07:16:24 GMT
+  // Connection: keep-alive
+  // Keep-Alive: timeout=5
+  // Request duration: 1.058932s
+  #+END_SRC
+
+** Get Log
+
+   #+begin_src restclient
+     GET :url/log
+   #+end_src
+
+   #+RESULTS:
+   #+BEGIN_SRC html
+   <!-- GET http://192.168.11.6:3000/log -->
+   <!-- HTTP/1.1 200 OK -->
+   <!-- X-Powered-By: Express -->
+   <!-- Content-Type: text/html; charset=utf-8 -->
+   <!-- Content-Length: 0 -->
+   <!-- ETag: W/"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk" -->
+   <!-- Date: Tue, 23 Feb 2021 07:27:35 GMT -->
+   <!-- Connection: keep-alive -->
+   <!-- Keep-Alive: timeout=5 -->
+   <!-- Request duration: 0.048584s -->
+   #+END_SRC
+
+** Download Url
+
+   #+begin_src restclient
+     POST :url/resources
+     {"url": ""}
+   #+end_src
+
+** Delete Log
+
+   #+begin_src restclient
+     DELETE :url/log
+   #+end_src
+
+   #+RESULTS:
+   #+BEGIN_SRC html
+   log file clear succeed
+   <!-- DELETE http://192.168.11.6:3000/log -->
+   <!-- HTTP/1.1 200 OK -->
+   <!-- X-Powered-By: Express -->
+   <!-- Content-Type: text/html; charset=utf-8 -->
+   <!-- Content-Length: 22 -->
+   <!-- ETag: W/"16-AUxHmUAdh0N0cQ+b2rOWiX4bYgw" -->
+   <!-- Date: Tue, 23 Feb 2021 07:27:16 GMT -->
+   <!-- Connection: keep-alive -->
+   <!-- Keep-Alive: timeout=5 -->
+   <!-- Request duration: 0.187496s -->
+   #+END_SRC
+
+** Delete Status Failed
+
+   #+begin_src restclient
+     DELETE :url/status/failed
+   #+end_src
+
+** Delete Status Downloading
+
+   #+begin_src restclient
+     DELETE :url/status/downloading
+   #+end_src
+
+** Delete Status Downloaded
+
+   #+begin_src restclient
+     DELETE :url/status/downloaded
+   #+end_src
+
+** Delete Status
+
+   #+begin_src restclient
+     DELETE :url/status
+   #+end_src
+
+
+

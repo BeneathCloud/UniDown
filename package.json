@@ -6,7 +6,7 @@
     "author": "las",
     "license": "MIT",
     "dependencies": {
-        "@justalk/pornhub-api": "^3.4.0",
+        "@justalk/pornhub-api": "^3.5.0",
         "@rodrigogs/xvideos": "github:BeneathCloud/xvideos",
         "axios": "^0.21.1",
         "exapi": "github:BeneathCloud/exApi",
