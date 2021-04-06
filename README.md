@@ -2,12 +2,10 @@
 (Personal use) An API for control downloading remotely, e.g. on a raspberry pi with external HDDs
 
 ## Current Supports
-1. `p***hub`
-2. xvideos
-3. e-hentai
-4. instagram
-5. youtube
-6. direct downloading
+1. p,x,e
+2. instagram
+3. youtube
+4. direct downloading
 
 ## Prerequsites
 
@@ -20,7 +18,7 @@
 
 1. clone this repo
 2. run `npm install`
-3. modify the `config.json`, set the `baseSaveDir` to the directory you want to put your files in, set ehentai `id` & `hash` from your logged in browser session, set instagram usename and password if necessary(if you don't want, set the `login` option to `false`), set `installoader` path
+3. modify the `config.json`, set the `baseSaveDir` to the directory you want to put your files in, set eh(*) `id` & `hash` from your logged in browser session, set instagram usename and password if necessary(if you don't want, set the `login` option to `false`), set `installoader` path
 4. run `./run` or `node app.js` in current directory, or add it as a service if you want
 
 After all these, you should be able to access the api from your browser at port `3000`, e.g. `http://127.0.0.1:3000`:
