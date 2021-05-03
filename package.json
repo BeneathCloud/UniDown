@@ -7,9 +7,9 @@
     "license": "MIT",
     "dependencies": {
         "@justalk/pornhub-api": "^3.5.0",
-        "@rodrigogs/xvideos": "github:BeneathCloud/xvideos",
+        "@rodrigogs/xvideos": "",
         "axios": "^0.21.1",
-        "exapi": "github:BeneathCloud/exApi",
+        "exapi": "github:1574242600/exApi",
         "express": "^4.17.1",
         "ffmpeg-static": "^4.2.7",
         "lowdb": "^1.0.0",
